@@ -3,35 +3,24 @@
 //
 
 #include "pch.h"
-#include "framework.h"
-// SHARED_HANDLERS можно определить в обработчиках фильтров просмотра реализации проекта ATL, эскизов
-// и поиска; позволяет совместно использовать код документа в данным проекте.
-#ifndef SHARED_HANDLERS
+// MFCApplicationTask1Doc.cpp
+
+// #include "stdafx.h"
+#include <vector>
 #include "MFCApplicationTask1.h"
-#endif
-
 #include "MFCApplicationTask1Doc.h"
-
-#include <propkey.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
-// CMFCApplicationTask1Doc
 
 IMPLEMENT_DYNCREATE(CMFCApplicationTask1Doc, CDocument)
 
 BEGIN_MESSAGE_MAP(CMFCApplicationTask1Doc, CDocument)
 END_MESSAGE_MAP()
 
-
-// Создание или уничтожение CMFCApplicationTask1Doc
-
 CMFCApplicationTask1Doc::CMFCApplicationTask1Doc() noexcept
 {
-	// TODO: добавьте код для одноразового вызова конструктора
-
 }
 
 CMFCApplicationTask1Doc::~CMFCApplicationTask1Doc()
@@ -40,99 +29,98 @@ CMFCApplicationTask1Doc::~CMFCApplicationTask1Doc()
 
 BOOL CMFCApplicationTask1Doc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
+    if (!CDocument::OnNewDocument())
+        return FALSE;
 
-	// TODO: добавьте код повторной инициализации
-	// (Документы SDI будут повторно использовать этот документ)
+    // TODO: Add your specialized code here and/or call the base class
 
-	return TRUE;
+    return TRUE;
 }
-
-
-
-
-// Сериализация CMFCApplicationTask1Doc
 
 void CMFCApplicationTask1Doc::Serialize(CArchive& ar)
 {
-	if (ar.IsStoring())
-	{
-		// TODO: добавьте код сохранения
-	}
-	else
-	{
-		// TODO: добавьте код загрузки
-	}
+    if (ar.IsStoring())
+    {
+        // TODO: Add your storing code here
+    }
+    else
+    {
+        // TODO: Add your loading code here
+    }
 }
-
 #ifdef SHARED_HANDLERS
 
-// Поддержка для эскизов
+// Support for thumbnails
 void CMFCApplicationTask1Doc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
 {
-	// Измените этот код для отображения данных документа
-	dc.FillSolidRect(lprcBounds, RGB(255, 255, 255));
+    // Modify this code to draw the document's data
+    dc.FillRect(lprcBounds, &CBrush(RGB(255, 255, 255)));
 
-	CString strText = _T("TODO: implement thumbnail drawing here");
-	LOGFONT lf;
-
-	CFont* pDefaultGUIFont = CFont::FromHandle((HFONT) GetStockObject(DEFAULT_GUI_FONT));
-	pDefaultGUIFont->GetLogFont(&lf);
-	lf.lfHeight = 36;
-
-	CFont fontDraw;
-	fontDraw.CreateFontIndirect(&lf);
-
-	CFont* pOldFont = dc.SelectObject(&fontDraw);
-	dc.DrawText(strText, lprcBounds, DT_CENTER | DT_WORDBREAK);
-	dc.SelectObject(pOldFont);
+    CString strText = _T("TODO: implement thumbnail drawing here");
+    dc.DrawText(strText, lprcBounds, DT_CENTER | DT_WORDBREAK);
 }
 
-// Поддержка обработчиков поиска
+// Support for Search Handlers
 void CMFCApplicationTask1Doc::InitializeSearchContent()
 {
-	CString strSearchContent;
-	// Задание содержимого поиска из данных документа.
-	// Части содержимого должны разделяться точкой с запятой ";"
+    CString strSearchContent;
+    // Set search contents from document's data. 
+    // The content parts should be separated by ";"
 
-	// Например:  strSearchContent = _T("точка;прямоугольник;круг;объект ole;");
-	SetSearchContent(strSearchContent);
+    // For example:  strSearchContent = _T("point;rectangle;circle;ole object;");
+    SetSearchContent(strSearchContent);
 }
 
-void CMFCApplicationTask1Doc::SetSearchContent(const CString& value)
+void CMFCApplicationTask1Doc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
 {
-	if (value.IsEmpty())
-	{
-		RemoveChunk(PKEY_Search_Contents.fmtid, PKEY_Search_Contents.pid);
-	}
-	else
-	{
-		CMFCFilterChunkValueImpl *pChunk = nullptr;
-		ATLTRY(pChunk = new CMFCFilterChunkValueImpl);
-		if (pChunk != nullptr)
-		{
-			pChunk->SetTextValue(PKEY_Search_Contents, value, CHUNK_TEXT);
-			SetChunkValue(pChunk);
-		}
-	}
+    // Modify this code to draw the document's data
+    dc.FillRect(lprcBounds, &CBrush(RGB(255, 255, 255)));
+
+    CString strText = _T("TODO: implement thumbnail drawing here");
+    dc.DrawText(strText, lprcBounds, DT_CENTER | DT_WORDBREAK);
 }
 
 #endif // SHARED_HANDLERS
 
-// Диагностика CMFCApplicationTask1Doc
-
+// Diagnostics
 #ifdef _DEBUG
 void CMFCApplicationTask1Doc::AssertValid() const
 {
-	CDocument::AssertValid();
+    CDocument::AssertValid();
 }
 
 void CMFCApplicationTask1Doc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+    CDocument::Dump(dc);
+}
+
+void CMFCApplicationTask1Doc::AddLine(const CPoint& startPoint, const CPoint& endPoint)
+{
+    // Добавляем линию в список
+    lines.push_back(startPoint);
+    lines.push_back(endPoint);
+}
+
+const std::vector<CPoint>& CMFCApplicationTask1Doc::GetLines() const
+{
+    // Возвращаем список линий
+    return lines;
+}
+
+void CMFCApplicationTask1Doc::ClearLines()
+{
+    // Очищаем список линий
+    lines.clear();
+}
+
+void CMFCApplicationTask1Doc::RemoveLastLine()
+{
+    // Удаляем последнюю линию
+    if (!lines.empty())
+    {
+        lines.pop_back();
+        lines.pop_back();
+    }
 }
 #endif //_DEBUG
 
-
-// Команды CMFCApplicationTask1Doc

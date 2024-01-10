@@ -84,6 +84,8 @@
 #define IDS_FIND_TAB				302
 #define IDS_EXPLORER				305
 #define IDS_EDIT_MENU				306
+#define ID_CLEAR_LINES              32771
+#define ID_CLEAR_LAST_LINE          32772
 
 // Следующие стандартные значения для новых объектов
 //
@@ -93,5 +95,8 @@
 #define _APS_NEXT_CONTROL_VALUE		1000
 #define _APS_NEXT_SYMED_VALUE		310
 #define _APS_NEXT_COMMAND_VALUE		32771
+
+
+
 #endif
 #endif

@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <vector>
 
 class CMFCApplicationTask1Doc : public CDocument
 {
@@ -22,6 +23,12 @@ public:
 public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
+
+	void AddLine(const CPoint& startPoint, const CPoint& endPoint);
+	const std::vector<CPoint>& GetLines() const;
+	void ClearLines();
+	void RemoveLastLine();
+
 #ifdef SHARED_HANDLERS
 	virtual void InitializeSearchContent();
 	virtual void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds);
@@ -36,7 +43,7 @@ public:
 #endif
 
 protected:
-
+	std::vector<CPoint> lines; // Список линий
 // Созданные функции схемы сообщений
 protected:
 	DECLARE_MESSAGE_MAP()
